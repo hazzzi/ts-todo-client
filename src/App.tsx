@@ -15,10 +15,15 @@ const App: React.FC = () => {
             .catch((err: Error) => console.log(err))
     }
 
+    const _handleSaveTodo = (e: React.FormEvent, todoForm: ITodo): void => {
+        e.preventDefault()
+        console.log(todoForm)
+    }
+
     return (
         <main className='App'>
             <h1>My Todos</h1>
-            <AddTodo></AddTodo>
+            <AddTodo saveTodo={_handleSaveTodo} />
         </main>
     )
 }
