@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import { getTodos } from './API'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: React.FC = () => {
+    const [todos, setTodos] = useState<ITodo[]>([])
+
+    useEffect(() => {
+        fetchTodos()
+    }, [])
+
+    const fetchTodos = (): void => {
+        getTodos()
+            .then(({ data: { todos } }: ITodo[] | any) => setTodos(todos))
+            .catch((err: Error) => console.log(err))
+    }
+
+    return (
+        <main className='App'>
+            <h1>My Todos</h1>
+        </main>
+    )
 }
 
-export default App;
+export default App
