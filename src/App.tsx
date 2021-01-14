@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { getTodos } from './API'
+import { addTodo, getTodos } from './API'
 import { AddTodo } from './components'
 
 const App: React.FC = () => {
     const [todos, setTodos] = useState<ITodo[]>([])
 
     useEffect(() => {
-        // fetchTodos()
+        fetchTodos()
     }, [])
 
     const fetchTodos = (): void => {
@@ -17,7 +17,12 @@ const App: React.FC = () => {
 
     const _handleSaveTodo = (e: React.FormEvent, todoForm: ITodo): void => {
         e.preventDefault()
-        console.log(todoForm)
+        addTodo(todoForm).then(({ status, data }) => {
+            if (status !== 201) {
+                throw new Error("Error! Todo not saved")
+            }
+            setTodos(data.todos)
+        }).catch(error => console.log(error))
     }
 
     return (
