@@ -30,7 +30,7 @@ const App: React.FC = () => {
             <h1>My Todos</h1>
             <AddTodo saveTodo={_handleSaveTodo} />
             {todos.map((todo: ITodo) => (
-                <TodoItem key={todo._id} />
+                <TodoItem key={todo._id} todo={todo} />
             ))}
         </main>
     )
