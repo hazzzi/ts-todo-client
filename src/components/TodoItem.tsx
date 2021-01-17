@@ -1,8 +1,12 @@
 import React from 'react'
 
-type Props = TodoProps
+type Props = TodoProps & {
+    deleteTodo: (_id: string) => void
+}
 
-const Todo: React.FC<Props> = ({ todo }) => {
+// todo 완료 로직 추가
+// todo 삭제 로직 추가
+const Todo: React.FC<Props> = ({ todo, deleteTodo }) => {
     return (
         <div className="Card">
             <div className="Card--text">
@@ -11,7 +15,7 @@ const Todo: React.FC<Props> = ({ todo }) => {
             </div>
             <div className="Card--button">
                 <button className="Card--button__done">complete</button>
-                <button className="Card--button__delete">delete</button>
+                <button className="Card--button__delete" onClick={() => deleteTodo(todo._id)}>delete</button>
             </div>
         </div>
     )
