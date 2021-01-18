@@ -1,6 +1,5 @@
-import { error } from 'console'
 import React, { useEffect, useState } from 'react'
-import { addTodo, deleteTodo, getTodos } from './API'
+import { addTodo, deleteTodo, getTodos, updateTodo } from './API'
 import { AddTodo, TodoItem } from './components'
 
 const App: React.FC = () => {
@@ -35,12 +34,21 @@ const App: React.FC = () => {
         }).catch(error => console.log(error))
     }
 
+    const _handleUpdateTodo = (todo: ITodo): void => {
+        updateTodo(todo).then(({ status, data }) => {
+            if (status !== 200) {
+                throw new Error("Error! Todo not updated")
+            }
+            setTodos(data.todos)
+        }).catch(error => console.log(error))
+    }
+
     return (
         <main className='App'>
             <h1>My Todos</h1>
             <AddTodo saveTodo={_handleSaveTodo} />
             {todos.map((todo: ITodo) => (
-                <TodoItem key={todo._id} todo={todo} deleteTodo={_handleDeleteTodo}/>
+                <TodoItem key={todo._id} todo={todo} deleteTodo={_handleDeleteTodo} updateTodo={_handleUpdateTodo} />
             ))}
         </main>
     )
